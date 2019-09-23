@@ -31,6 +31,10 @@ public class PlayerMovement : MonoBehaviour {
         float moveHorizontalPlayerOne = Input.GetAxis("P1_Horizontal");
         float moveHorizontalPlayerTwo = Input.GetAxis("P2_Horizontal");
 
+        // Flipping the players when walking opposite
+        //FlipSprite(playerOne, moveHorizontalPlayerOne);
+        //FlipSprite(playerTwo, moveHorizontalPlayerTwo);
+
         // Store the current vertical input in the float moveVertical.
         float moveVerticalPlayerOne = Input.GetAxis("P1_Vertical");
         float moveVerticalPlayerTwo = Input.GetAxis("P2_Vertical");
@@ -40,10 +44,17 @@ public class PlayerMovement : MonoBehaviour {
         Vector2 movementPlayerTwo = new Vector2(moveHorizontalPlayerTwo, moveVerticalPlayerTwo);
 
         // Set the position of our player as per the movements keeping it framerate independent.
-        playerOneRBody.position += Time.deltaTime * movementPlayerOne * playerSpeed;
-        playerTwoRBody.position += Time.deltaTime * movementPlayerTwo * playerSpeed;
+        if (playerOne.GetComponent<Player>().CanMove()) {
+            playerOneRBody.position += Time.deltaTime * movementPlayerOne * playerSpeed;
+        }
+        if (playerTwo.GetComponent<Player>().CanMove()) {
+            playerTwoRBody.position += Time.deltaTime * movementPlayerTwo * playerSpeed;
+        }
 
-        // Flip the player if he is walking 
-        //FlipSprite(moveHorizontal);
+        
+    }
+    void FlipSprite(GameObject player, float moveHorizontal)
+    {
+        player.transform.localScale = new Vector2(Mathf.Sign(moveHorizontal), 1f);
     }
 }
