@@ -36,15 +36,15 @@ public class Player : MonoBehaviour {
     {
         //Checking whether this veggie can be picked up
         if( vegetablesPicked != null ) {
-            if (CanNotBePicked(collider)) { return; }
+            if (CanNotBePicked(collider) || collider.tag == "Veggie") { return; }
         }
 
         if (Input.GetKeyUp(KeyCode.Space) && gameObject.tag == "Player 1") {
-            vegetablesPicked = collider.gameObject.name = vegetablesPicked;
+            vegetablesPicked = collider.gameObject.name + vegetablesPicked;
             Debug.LogWarning("Pick Up P1" + vegetablesPicked);
         }
         else if (Input.GetKeyUp(KeyCode.Return) && gameObject.tag == "Player 2") {
-            vegetablesPicked = collider.gameObject.name = vegetablesPicked;
+            vegetablesPicked = collider.gameObject.name + vegetablesPicked;
             Debug.LogWarning("Pick Up P2" + vegetablesPicked);
         }
 
@@ -59,5 +59,11 @@ public class Player : MonoBehaviour {
             return true;
         }
         return false;
+    }
+
+    public char GetPlacingVeggie () {
+        char veggie = vegetablesPicked[0];
+        vegetablesPicked = vegetablesPicked.Substring(1, 1);
+        return veggie;
     }
 }

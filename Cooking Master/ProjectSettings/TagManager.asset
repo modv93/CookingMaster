@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Player 1
   - Player 2
+  - CB_1
+  - CB_2
+  - Veggie
   layers:
   - Default
   - TransparentFX
