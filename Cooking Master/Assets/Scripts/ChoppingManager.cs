@@ -5,9 +5,8 @@ using UnityEngine.UI;
 
 public class ChoppingManager : MonoBehaviour {
 
-    [SerializeField] Text boardOneText, boardTwoText;
     private Player[] players;
-    private string choppingTableOne, choppingTableTwo;
+    private Text boardText;
     // Use this for initialization
     void Start () {
         SetupUtilities();
@@ -15,6 +14,7 @@ public class ChoppingManager : MonoBehaviour {
 	
     void SetupUtilities () {
         players = FindObjectsOfType<Player>();
+        boardText = gameObject.GetComponentInChildren<Text>();
 
         //maintaining the order for players array
         if (players[1].tag == "Player 1") {
@@ -22,8 +22,8 @@ public class ChoppingManager : MonoBehaviour {
             players[0] = players[1];
             players[1] = temp;
         }
-        choppingTableOne = "";
-        choppingTableTwo = "";
+
+        boardText.text = "";
     }
 
 	// Update is called once per frame
@@ -32,15 +32,17 @@ public class ChoppingManager : MonoBehaviour {
 	}
 
     void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.tag == "Player 1")
+        
+        if (collider.tag == "Player 1" && gameObject.tag == "CB_1")
         {
-            choppingTableOne += players[0].GetPlacingVeggie();
-            boardOneText.text = choppingTableOne;
+            if (players[0].GetPlacingVeggie() == null) { return; }
+            boardText.text += players[0].GetPlacingVeggie();
         }
-        else if (collider.tag == "Player 2")
+        else if (collider.tag == "Player 2" && gameObject.tag == "CB_2")
         {
-            choppingTableTwo += players[1].GetPlacingVeggie();
-            boardTwoText.text = choppingTableTwo;
+            if (players[1].GetPlacingVeggie() == null) { return; }
+            boardText.text += players[1].GetPlacingVeggie();
         }
     }
+
 }

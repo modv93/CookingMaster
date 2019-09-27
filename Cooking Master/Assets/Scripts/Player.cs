@@ -10,7 +10,7 @@ public class Player : MonoBehaviour {
 
     private bool canMove = true;
     private string vegetablesPicked = null;
-    private const int MAX_PICKUP_VEGGIES = 2;
+    private const int MAX_PICKUP_VEGGIES = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -26,8 +26,9 @@ public class Player : MonoBehaviour {
         return canMove;
     }
 
-    void OnTriggerStay2D(Collider2D collider)
+    void OnTriggerEnter2D(Collider2D collider)
     {
+        Debug.LogWarning("Enter T" + vegetablesPicked);
         VeggiesPickup(collider);
         ShowPickups();
     }
@@ -36,14 +37,14 @@ public class Player : MonoBehaviour {
     {
         //Checking whether this veggie can be picked up
         if( vegetablesPicked != null ) {
-            if (CanNotBePicked(collider) || collider.tag == "Veggie") { return; }
+            if (CanNotBePicked(collider)) { return; }
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) && gameObject.tag == "Player 1") {
+        if (gameObject.tag == "Player 1" && collider.tag == "Veggie") {
             vegetablesPicked = collider.gameObject.name + vegetablesPicked;
             Debug.LogWarning("Pick Up P1" + vegetablesPicked);
         }
-        else if (Input.GetKeyUp(KeyCode.Return) && gameObject.tag == "Player 2") {
+        else if (gameObject.tag == "Player 2" && collider.tag == "Veggie") {
             vegetablesPicked = collider.gameObject.name + vegetablesPicked;
             Debug.LogWarning("Pick Up P2" + vegetablesPicked);
         }
@@ -55,15 +56,27 @@ public class Player : MonoBehaviour {
     }
 
     private bool CanNotBePicked(Collider2D collider) {
-        if(vegetablesPicked.Contains(collider.gameObject.name) || vegetablesPicked.Length >= MAX_PICKUP_VEGGIES) {
+        if(vegetablesPicked.Contains(collider.gameObject.name) || vegetablesPicked.Length >= MAX_PICKUP_VEGGIES + 1) {
             return true;
         }
         return false;
     }
 
-    public char GetPlacingVeggie () {
-        char veggie = vegetablesPicked[0];
-        vegetablesPicked = vegetablesPicked.Substring(1, 1);
+    public string GetPlacingVeggie () {
+        if(vegetablesPicked == null) { return ""; }
+
+        string veggie = "";
+
+        if (vegetablesPicked.Length == 2) {
+            veggie = vegetablesPicked[0].ToString();
+            vegetablesPicked = vegetablesPicked[0].ToString();
+        }
+        else if(vegetablesPicked.Length == 1) {
+            veggie = vegetablesPicked[0].ToString();
+            vegetablesPicked = "";
+        }
+
+        ShowPickups();
         return veggie;
     }
 }
