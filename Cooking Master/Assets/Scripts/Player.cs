@@ -9,7 +9,7 @@ public class Player : MonoBehaviour {
     [SerializeField] private Text playerItemDisplay;
 
     private bool canMove = true;
-    private string vegetablesPicked = null;
+    public string vegetablesPicked = null;
     private const int MAX_PICKUP_VEGGIES = 1;
 
 	// Use this for initialization
@@ -28,7 +28,6 @@ public class Player : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.LogWarning("Enter T" + vegetablesPicked);
         VeggiesPickup(collider);
         ShowPickups();
     }
@@ -40,13 +39,11 @@ public class Player : MonoBehaviour {
             if (CanNotBePicked(collider)) { return; }
         }
 
-        if (gameObject.tag == "Player 1" && collider.tag == "Veggie") {
+        if ( gameObject.CompareTag("Player 1") && collider.CompareTag("Veggie") ) {
             vegetablesPicked = collider.gameObject.name + vegetablesPicked;
-            Debug.LogWarning("Pick Up P1" + vegetablesPicked);
         }
-        else if (gameObject.tag == "Player 2" && collider.tag == "Veggie") {
+        else if ( gameObject.CompareTag("Player 2") && collider.CompareTag("Veggie") ) {
             vegetablesPicked = collider.gameObject.name + vegetablesPicked;
-            Debug.LogWarning("Pick Up P2" + vegetablesPicked);
         }
 
     }
@@ -62,14 +59,13 @@ public class Player : MonoBehaviour {
         return false;
     }
 
-    public string GetPlacingVeggie () {
+    public string PlaceVegetableOnTable() {
         if(vegetablesPicked == null) { return ""; }
 
         string veggie = "";
-
         if (vegetablesPicked.Length == 2) {
             veggie = vegetablesPicked[0].ToString();
-            vegetablesPicked = vegetablesPicked[0].ToString();
+            vegetablesPicked = vegetablesPicked[1].ToString();
         }
         else if(vegetablesPicked.Length == 1) {
             veggie = vegetablesPicked[0].ToString();

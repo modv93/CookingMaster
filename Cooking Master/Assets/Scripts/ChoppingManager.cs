@@ -32,16 +32,14 @@ public class ChoppingManager : MonoBehaviour {
 	}
 
     void OnTriggerEnter2D(Collider2D collider) {
-        
-        if (collider.tag == "Player 1" && gameObject.tag == "CB_1")
+
+        if (collider.CompareTag("Player 1")  && gameObject.CompareTag("CB_1"))
         {
-            if (players[0].GetPlacingVeggie() == null) { return; }
-            boardText.text += players[0].GetPlacingVeggie();
+            boardText.text = boardText.text + players[0].PlaceVegetableOnTable();
         }
-        else if (collider.tag == "Player 2" && gameObject.tag == "CB_2")
+        else if (collider.CompareTag("Player 2") && gameObject.CompareTag("CB_2"))
         {
-            if (players[1].GetPlacingVeggie() == null) { return; }
-            boardText.text += players[1].GetPlacingVeggie();
+            boardText.text = boardText.text + players[1].PlaceVegetableOnTable();
         }
     }
 
