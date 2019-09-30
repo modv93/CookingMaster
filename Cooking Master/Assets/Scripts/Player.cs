@@ -66,13 +66,22 @@ public class Player : MonoBehaviour {
         if (vegetablesPicked.Length == 2) {
             veggie = vegetablesPicked[0].ToString();
             vegetablesPicked = vegetablesPicked[1].ToString();
+            StartCoroutine(VeggieIsBeingChopped(2f));
         }
         else if(vegetablesPicked.Length == 1) {
             veggie = vegetablesPicked[0].ToString();
             vegetablesPicked = "";
+            StartCoroutine(VeggieIsBeingChopped(2f));
         }
 
         ShowPickups();
         return veggie;
     }
+    IEnumerator VeggieIsBeingChopped(float waitTime)
+    {
+        canMove = false;
+        yield return new WaitForSeconds(waitTime);
+        canMove = true;
+    }
+
 }

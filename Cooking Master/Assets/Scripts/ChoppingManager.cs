@@ -24,16 +24,21 @@ public class ChoppingManager : MonoBehaviour {
         }
 
         boardText.text = "";
-    }
+    } 
 
 	// Update is called once per frame
 	void Update () {
 		
 	}
 
-    void OnTriggerEnter2D(Collider2D collider) {
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        PlaceVeggieOnTable(collider);
+    }
 
-        if (collider.CompareTag("Player 1")  && gameObject.CompareTag("CB_1"))
+    private void PlaceVeggieOnTable(Collider2D collider)
+    {
+        if (collider.CompareTag("Player 1") && gameObject.CompareTag("CB_1"))
         {
             boardText.text = boardText.text + players[0].PlaceVegetableOnTable();
         }
@@ -42,5 +47,6 @@ public class ChoppingManager : MonoBehaviour {
             boardText.text = boardText.text + players[1].PlaceVegetableOnTable();
         }
     }
+
 
 }
