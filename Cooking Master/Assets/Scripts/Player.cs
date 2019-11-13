@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
-    [SerializeField]private string playerName;
+    [SerializeField] private string playerName;
     [SerializeField] private Text playerItemDisplay;
 
     private bool canMove = true;
@@ -16,11 +16,6 @@ public class Player : MonoBehaviour {
 	void Start () {
         GetComponentInChildren<TextMesh>().text = playerName;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public bool CanMove () {
         return canMove;
@@ -77,8 +72,8 @@ public class Player : MonoBehaviour {
         ShowPickups();
         return veggie;
     }
-    IEnumerator VeggieIsBeingChopped(float waitTime)
-    {
+
+    IEnumerator VeggieIsBeingChopped(float waitTime) {
         canMove = false;
         yield return new WaitForSeconds(waitTime);
         canMove = true;

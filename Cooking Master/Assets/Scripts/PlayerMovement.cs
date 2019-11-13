@@ -5,27 +5,29 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     [SerializeField] GameObject playerOne, playerTwo;
+
     private Rigidbody2D playerOneRBody, playerTwoRBody;
     private float playerSpeed = 5.0f;
-    // Use this for initialization
+
     void Start () {
         SetupUtilities();
     }
-    private void SetupUtilities()
-    {
-        if(!playerOne || !playerTwo) { playerOne = GameObject.FindGameObjectWithTag("Player 1"); }
+
+    private void SetupUtilities() {
+        if (!playerOne || !playerTwo) { playerOne = GameObject.FindGameObjectWithTag("Player 1"); }
         if (!playerOne || !playerTwo) { playerTwo = GameObject.FindGameObjectWithTag("Player 2"); }
 
         playerOneRBody = playerOne.GetComponent<Rigidbody2D>();
         playerTwoRBody = playerTwo.GetComponent<Rigidbody2D>();
-        if (!playerOneRBody || !playerTwoRBody) {
-            return;
-        }
+
+        if (!playerOneRBody || !playerTwoRBody) { return; }
     }
+
     // Update is called once per frame
     void FixedUpdate () {
         Move();
     }
+
     void Move () {
         // Store the current horizontal input in the float moveHorizontal.
         float moveHorizontalPlayerOne = Input.GetAxis("P1_Horizontal");
@@ -43,6 +45,7 @@ public class PlayerMovement : MonoBehaviour {
         if (playerOne.GetComponent<Player>().CanMove()) {
             playerOneRBody.position += Time.deltaTime * movementPlayerOne * playerSpeed;
         }
+
         if (playerTwo.GetComponent<Player>().CanMove()) {
             playerTwoRBody.position += Time.deltaTime * movementPlayerTwo * playerSpeed;
         }
